@@ -1,0 +1,48 @@
+<div data-options="dxView : { name: 'AN_Anlaggning', title: '@Anlaggningsregister' } " >
+	<div data-options="dxContent : { targetPlaceholder: 'content' } ">
+		<div data-bind="dxToolbar: {items: toolbarData}"></div>
+		<!--<div id="navBarContainer" data-bind="dxNavBar:{dataSource: navItems, onItemClick: navItemClicked}"></div>-->
+		<div id="gridREARE" data-bind="dxDataGrid: {
+                dataSource: dsREARE,
+            columns: [
+                { dataField: 'ANL_NR', caption: '@Anlnr'},
+                { dataField: 'BEN', caption: '@Ben'},
+                { dataField: 'HUV_ANL_NR', caption: '@Huvanlnr', lookup: { dataSource: dsREANH,    valueExpr: 'NR',  displayExpr: 'BEN' }},
+                { dataField: 'KOMPONENT', caption: '@Komponent', lookup: { dataSource: dsFenixKomponent,    valueExpr: 'Kod',  displayExpr: 'Beskrivning' }},
+                { dataField: 'FASTIGHET', caption: '@Fastighet', lookup: { dataSource: dsFenixFastighet,    valueExpr: 'FastNr',  displayExpr: 'Beteckning' }},
+                { dataField: 'GRUPP', caption: '@Grupp', lookup: { dataSource: dsGrupp,    valueExpr: 'NR',  displayExpr: 'TEXT_1' }},
+                { dataField: 'TYP', caption: '@Typ', lookup: { dataSource: dsREANHTyp, valueExpr: 'Kod', displayExpr: 'Namn' }},
+                { dataField: 'KAT', caption: '@Kategori', lookup: { dataSource: dsKat, valueExpr: 'NR', displayExpr: 'TEXT_1' }},
+                { dataField: 'ANSVARIG', caption: '@Ansvarig', lookup: { dataSource: dsAnsvarig, valueExpr: 'NR', displayExpr: 'TEXT_1' }},
+                { dataField: 'PLATS1', caption: '@Plats1', lookup: { dataSource: dsPlats, valueExpr: 'NR', displayExpr: 'TEXT_1' }},
+                { dataField: 'PLATS2', caption: '@Plats2', lookup: { dataSource: dsPlats, valueExpr: 'NR', displayExpr: 'TEXT_1' }},
+                { dataField: 'HELT_AVSKR', caption: '@Heltavskr', lookup: { dataSource: dsJanej, valueExpr: 'Kod', displayExpr: 'Namn' }},
+             ],
+            columnChooser: { enabled: true },
+            headerFilter: {
+                visible: true,
+                allowSearch: true
+            },
+            sorting: { mode: 'multiple' },
+            pager: {
+                allowedPageSizes: [5, 8, 10,20],
+                showPageSizeSelector: true
+            },
+            paging: { pageSize: 8 },
+            editing: {
+                allowUpdating: true,
+                mode: 'row',
+                allowAdding: true,
+                allowDeleting: true,
+					 useIcons: true,
+            },
+            filterRow: { visible: true },
+            searchPanel: { visible: true },
+            selection: { mode: 'single' },
+            stateStoring: { enabled: true },
+            groupPanel: { visible: true },
+            allowColumnReordering: {enabled:true},
+            allowColumnResizing: {enabled:true},
+        }"></div>
+	</div>
+</div>

@@ -1,0 +1,33 @@
+<div data-options="dxView : { name: 'AN_Meny', title: '@Anlaggningar' } ">
+    <div data-options="dxContent : { targetPlaceholder: 'content' } ">
+		 <div data-bind="dxScrollView: { }">
+		 	<div data-bind="dxLoadPanel:{
+                message: '@Vanta...',
+                visible: loadPanelVisible
+            }"></div>
+		 	<div id="search" data-bind="dxTextBox: {
+                placeholder: '@Sok',
+                mode: 'search',
+                width: 300,
+                 visible: generic,
+                valueChangeEvent: 'keyup',
+                    onValueChanged: function(e) {
+                        searchValue(e.value)
+                    }
+                }"></div>
+		 	<br />
+		 	<div id="meny" class="treeView" data-bind="dxTreeView: {
+            dataStructure: 'plain',
+            dataSource: treeViewData,
+            searchValue: searchValue,
+				itemTemplate: nodeTemplate,
+            width: treeWidth,
+            onItemClick: function (e) {
+                OpenView(e);
+                },
+        }">
+
+		 	</div>
+		 </div>
+    </div>
+</div>

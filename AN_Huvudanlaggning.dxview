@@ -1,0 +1,81 @@
+<div data-options="dxView : { name: 'AN_Huvudanlaggning', title: '@Huvudanlaggningar' } ">
+    <div data-options="dxContent : { targetPlaceholder: 'content' } ">
+
+        <div id="Huvudanlaggninggrid" data-bind="dxDataGrid: {
+
+    columnChooser: {enabled:true},
+    paging: { pageSize: 8 },
+    pager: {
+        allowedPageSizes: [5, 8, 10,20],
+        showPageSizeSelector: true
+    },
+
+    filterRow: { visible: true },
+    searchPanel: { visible: false },
+    groupPanel: { visible: true },
+    allowColumnReordering: {enabled:true},
+    allowColumnResizing: {enabled:true},
+    selection: {mode:'single'},
+    editing: {
+            allowUpdating: true,
+            editMode: 'row',
+            allowAdding: true,
+            allowDeleting: true,
+				useIcons: true,
+        },
+    dataSource: dsREANH ,
+    columns: [
+             { caption: '@Nr' ,dataField: 'NR' ,dataType: 'string' },
+             { caption: '@Ben' ,dataField: 'BEN' ,dataType: 'string' },
+             { caption: '@Grupp' ,dataField: 'GRUPP' , dataType: 'integer', lookup: { dataSource: dsGrupp,    valueExpr: 'NR',  displayExpr: 'TEXT_1' } },
+             { caption: '@Typ' ,dataField: 'TYP' , dataType: 'integer',     lookup: { dataSource: dsREANHTyp, valueExpr: 'Kod', displayExpr: 'Namn' } },
+             { caption: '@Kat' ,dataField: 'KAT' , dataType: 'integer' , lookup: { dataSource: dsKat, valueExpr: 'NR', displayExpr: 'TEXT_1' }},
+             { caption: '@Ansvarig' ,dataField: 'ANSVARIG' , dataType: 'integer' , lookup: { dataSource: dsAnsvarig, valueExpr: 'NR', displayExpr: 'TEXT_1' }},
+             { caption: '@Plats1' ,dataField: 'PLATS1' , dataType: 'integer' , lookup: { dataSource: dsPlats, valueExpr: 'NR', displayExpr: 'TEXT_1' }},
+             { caption: '@Plats2' ,dataField: 'PLATS2' , dataType: 'integer' , lookup: { dataSource: dsPlats, valueExpr: 'NR', displayExpr: 'TEXT_1' }},
+             { caption: '@Skatt_typ' ,dataField: 'SKATT_TYP' , dataType: 'string' ,
+             lookup: {
+             dataSource: dsSkattemassig,
+             valueExpr: 'Kod' ,
+             displayExpr: 'Namn'
+             }
+             },
+             { caption: '@Skatt_procent' ,dataField: 'SKATT_PROCENT' , dataType: 'number' },
+            { caption: '@Skatt_balans',dataField: 'SKATT_BALANS', dataType: 'string',
+            editCellTemplate: function(container, options) {
+	            container.addClass('lookup-cell');
+                    $('<div />').dxLookup({ dataSource: dsREKTK,
+		            valueExpr: 'KONTO_NR',
+                            displayExpr: 'KONTO_NR',
+                            value: options.value,
+                            itemTemplate: itemRenderer,
+                            onValueChanged: function(e) {options.setValue(String(e.value));}
+                            })
+                            .appendTo(container);
+	            }
+            },
+            { caption: '@Skatt_resultat',dataField: 'SKATT_RESULTAT', dataType: 'string',
+            editCellTemplate: function(container, options) {
+                container.addClass('lookup-cell');
+                    $('<div />').dxLookup({ dataSource: dsREKTK,
+                    valueExpr: 'KONTO_NR',
+                    displayExpr: 'KONTO_NR',
+                    value: options.value,
+                    itemTemplate: itemRenderer,
+                    onValueChanged: function(e) {options.setValue(String(e.value));}
+                    })
+                    .appendTo(container);
+                }
+            },
+
+             ] }">
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+

@@ -1,0 +1,207 @@
+<div data-options="dxView : { name: 'AN_Avskrivningar', title: '@Avskrivningstyper' } " >
+    <div  data-options="dxContent : { targetPlaceholder: 'content' } " >
+        <div id="gridREATT" data-bind="dxDataGrid: {
+            dataSource: dsREATT,
+				columnChooser: { enabled: true },
+            sorting: { mode: 'multiple' },
+            pager: {
+                allowedPageSizes: [5, 8, 10,20],
+                showPageSizeSelector: true
+            },
+            paging: { pageSize: 8 },
+            filterRow: { visible: false },
+            searchPanel: { visible: false },
+            selection: { mode: 'none' },
+            stateStoring: { enabled: true , storageKey: 'AN_Avskrivningar'},
+            allowColumnReordering: {enabled:true},
+            allowColumnResizing: {enabled:true},
+				columnResizingMode: 'widget',
+            columns: [
+					{ dataField: 'ANL_NR', caption: '@Anlnr'},
+					{ dataField: 'RAD_NR', caption: '@Radnr'},
+					{ dataField: 'DEBET_KONTO', caption: '@Dkonto',
+						lookup: { 
+							dataSource: dsREKTK,
+							allowClearing: true,
+							valueExpr: 'KONTO_NR',  
+							displayExpr: 'NAMN' 
+						},
+				 		editorOptions:KonteringEditorOptions,
+						cellTemplate: cellKonto,
+					},
+					{ caption: '@Debet' + ' '+ FXMobile.kd1Namn ,dataField: 'DEBET_KD1' ,dataType: 'string' ,
+				 			lookup: {
+							  dataSource: dsREKOD1,
+							  allowClearing: true,
+							  valueExpr: 'KD_NR' ,
+							  displayExpr: 'NAMN'
+							  },
+						editorOptions:KonteringEditorOptions,
+						cellTemplate: cellKd,
+					},	
+          		{ caption: '@Debet' + ' '+ FXMobile.kd2Namn ,dataField: 'DEBET_KD2' ,dataType: 'string' ,
+							lookup: {
+							  dataSource: dsREKOD2,
+							  allowClearing: true,
+							  valueExpr: 'KD_NR' ,
+							  displayExpr: 'NAMN'
+							  },
+						editorOptions:KonteringEditorOptions,
+						cellTemplate: cellKd,
+					},
+          		{ caption: '@Debet' + ' '+ FXMobile.kd3Namn ,dataField: 'DEBET_KD3' ,dataType: 'string' ,
+							lookup: {
+							  dataSource: dsREKOD3,
+							  allowClearing: true,
+							  valueExpr: 'KD_NR' ,
+							  displayExpr: 'NAMN'
+							  },
+						editorOptions:KonteringEditorOptions,
+						cellTemplate: cellKd,
+					},
+					{ caption: '@Debet' + ' '+ FXMobile.kd4Namn ,dataField: 'DEBET_KD4' ,dataType: 'string' ,
+							lookup: {
+							  dataSource: dsREKOD4,
+							  allowClearing: true,
+							  valueExpr: 'KD_NR' ,
+							  displayExpr: 'NAMN'
+							  },
+						editorOptions:KonteringEditorOptions,
+						cellTemplate: cellKd,
+					},
+					{ dataField: 'DEBET_PROJEKT', caption: '@Debet' + ' Projekt', dataType: 'string'} ,
+
+               { dataField: 'KREDIT_KONTO', caption: '@Kkonto', 
+						lookup: { 
+							dataSource: dsREKTK,
+							allowClearing: true,
+							valueExpr: 'KONTO_NR',  
+							displayExpr: 'NAMN' 
+						},
+				 		editorOptions:KonteringEditorOptions,
+						cellTemplate: cellKonto,
+					},
+					{ caption: '@Kredit' + ' '+ FXMobile.kd1Namn ,dataField: 'KREDIT_KD1' ,dataType: 'string' ,
+							lookup: {
+							  dataSource: dsREKOD1,
+							  allowClearing: true,
+							  valueExpr: 'KD_NR' ,
+							  displayExpr: 'NAMN'
+							  },
+						editorOptions:KonteringEditorOptions,
+						cellTemplate: cellKd,
+					},	
+          		{ caption: '@Kredit' + ' '+ FXMobile.kd2Namn ,dataField: 'KREDIT_KD2' ,dataType: 'string' ,
+							lookup: {
+							  dataSource: dsREKOD2,
+							  allowClearing: true,
+							  valueExpr: 'KD_NR' ,
+							  displayExpr: 'NAMN'
+							  },
+						editorOptions:KonteringEditorOptions,
+						cellTemplate: cellKd,
+					},
+          		{ caption: '@Kredit' + ' '+ FXMobile.kd3Namn ,dataField: 'KREDIT_KD3' ,dataType: 'string' ,
+							lookup: {
+							  dataSource: dsREKOD3,
+							  allowClearing: true,
+							  valueExpr: 'KD_NR' ,
+							  displayExpr: 'NAMN'
+							  },
+						editorOptions:KonteringEditorOptions,
+						cellTemplate: cellKd,
+					},
+					{ caption: '@Kredit' + ' '+ FXMobile.kd4Namn ,dataField: 'KREDIT_KD4' ,dataType: 'string' ,
+							lookup: {
+							  dataSource: dsREKOD4,
+							  allowClearing: true,
+							  valueExpr: 'KD_NR' ,
+							  displayExpr: 'NAMN'
+							  },
+						editorOptions:KonteringEditorOptions,
+						cellTemplate: cellKd,
+					},
+				{ dataField: 'KREDIT_PROJEKT', caption: '@Kprojekt', dataType: 'string',},
+            { dataField: 'BAS_KOD', caption: '@Baskod', lookup: { dataSource: dsREATTBaskod, valueExpr: 'Kod', displayExpr: 'Namn' }},
+            { dataField: 'AVSKR_TYP', caption: '@Avskrtyp', lookup: { dataSource: dsREATTTyp, valueExpr: 'Kod', displayExpr: 'Namn' }},
+            { dataField: 'INDEX', caption: '@Index', visible: false},
+            { dataField: 'REAL_SATS', caption: '@Realsats', visible: false},
+            { dataField: 'AVSKR_TID', caption: '@Avskrtid',dataType: 'number'},
+            { dataField: 'PERIODICITET', caption: '@Periodicitet',dataType: 'number'},
+            { dataField: 'AVSKR_PLAN', caption: '@Avskrplan', visible: false},
+            { dataField: 'START_DATUM', caption: '@Startdatum',format: 'yyyy-MM-dd', width: 110, dataType: 'date'},
+            { dataField: 'SLUT_DATUM', caption: '@Slutdatum',format: 'yyyy-MM-dd', width: 110, dataType: 'date'},
+            { dataField: 'SEN_AVSKR_DATUM', caption: '@Senavskrdatum',format: 'yyyy-MM-dd', width: 110, dataType: 'date', visible: false},
+            { dataField: 'FORTSATT_AVSKR', caption: '@Fortsattavskr',visible: false},
+            { dataField: 'FAKTOR', caption: '@Faktor',visible: false},
+            { dataField: 'AVSKR_PROC', caption: '@Avskrproc',dataType: 'number'},
+            { dataField: 'AVSKR_PROC_KOD', caption: '@Avskrprockod',visible: false},
+             ],
+
+				editing: {
+                allowUpdating: true,
+                mode: 'form',
+                allowAdding: true,
+                allowDeleting: true,
+					 useIcons: true,
+				}
+					 form: {
+
+						items: [
+							{
+							itemType: 'group',
+							caption:'@Debet',
+							items: [
+								{ dataField: 'DEBET_KONTO'},
+								{ dataField: 'DEBET_KD1'},
+								{ dataField: 'DEBET_KD2'},
+								{ dataField: 'DEBET_KD3'},
+								{ dataField: 'DEBET_KD4'},
+								{ dataField: 'DEBET_PROJEKT'},
+								]
+							},
+
+							{
+							itemType: 'group',
+							caption: '@Kredit',
+							items: [
+								{ dataField: 'KREDIT_KONTO'},
+								{ dataField: 'KREDIT_KD1'},
+								{ dataField: 'KREDIT_KD2'},
+								{ dataField: 'KREDIT_KD3'},
+								{ dataField: 'KREDIT_KD4'},
+								{ dataField: 'KREDIT_PROJEKT'},
+								]
+							},
+
+							{
+							itemType: 'group',
+							caption: '@Avskrivningar',
+							items: [
+								{ dataField: 'BAS_KOD' },
+								{ dataField: 'AVSKR_TYP' },
+								{ dataField: 'INDEX', visible: false},
+								{ dataField: 'REAL_SATS', visible: false},
+								{ dataField: 'AVSKR_TID'},
+								{ dataField: 'PERIODICITET'},
+								{ dataField: 'AVSKR_PLAN', visible: false},
+								{ dataField: 'START_DATUM'},
+								{ dataField: 'SLUT_DATUM'},
+								{ dataField: 'SEN_AVSKR_DATUM'},
+								{ dataField: 'FORTSATT_AVSKR',visible: false},
+								{ dataField: 'FAKTOR', visible: false},
+								{ dataField: 'AVSKR_PROC' },
+								{ dataField: 'AVSKR_PROC_KOD',visible: false},
+								]
+							}
+
+
+							],
+					 }, 
+            },
+
+
+            }">
+        </div>
+    </div>
+</div>

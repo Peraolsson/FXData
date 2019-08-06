@@ -1,0 +1,63 @@
+<div data-options="dxView : { name: 'AN_Transaktioner', title: '@Transaktioner' } " >
+	<div data-options="dxContent : { targetPlaceholder: 'content' } ">
+		<div data-bind="dxCommand: {  location: 'after', target: 'current', id: 'back', title: '' , onExecute:handleBack , icon: 'arrowleft'}"></div>
+
+		<div id="gridREAVT" data-bind="dxDataGrid: {
+            dataSource: dsREAVT,
+            columns: [
+                { dataField: 'ANL_NR', caption: '@Anlnr'},
+                { dataField: 'VER_NR', caption: '@Vernr'},
+                { dataField: 'TEXT', caption: '@Text'},
+                { dataField: 'VER_DATUM', caption: '@Verdatum',format: 'yyyy-MM-dd', width: 110, dataType: 'date'},
+                { dataField: 'DEBET_KONTO', caption: '@Dkonto'},
+                { dataField: 'KREDIT_KONTO', caption: '@Kkonto'},
+                { dataField: 'BELOPP', caption: '@Belopp', alignment: 'right',                         format: function (value) {
+                            return formatNumber(value);
+                        }, dataType: 'number'},
+                { dataField: 'AVSKR_TYP', caption: '@Avskrtyp',lookup: { dataSource: dsREATTBaskod, valueExpr: 'Kod', displayExpr: 'Namn' }},
+                { dataField: 'TRANS_TYP', caption: '@Transtyp',lookup: { dataSource: dsREATTTyp,    valueExpr: 'Kod', displayExpr: 'Namn' }},
+                { dataField: 'STATUS',    caption: '@Status',  lookup: { dataSource: dsREATTStatus, valueExpr: 'Kod', displayExpr: 'Namn' }},
+             ],
+            columnChooser: { enabled: true },
+            sorting: { mode: 'multiple' },
+            pager: {
+                allowedPageSizes: [5, 8, 10,20],
+                showPageSizeSelector: true
+            },
+            paging: { pageSize: 8 },
+            editing: {
+                allowUpdating: true,
+                editMode: 'row',
+                allowAdding: true,
+                allowDeleting: true,
+					 useIcons: true,
+            },
+            filterRow: { visible: true },
+            searchPanel: { visible: true },
+            selection: { mode: 'single' },
+            stateStoring: { enabled: true },
+            groupPanel: { visible: true },
+            allowColumnReordering: {enabled:true},
+            allowColumnResizing: {enabled:true},
+            groupPanel: { visible: true },
+             summary: {
+                groupItems: [{
+                    column: 'BELOPP',
+                    summaryType: 'sum',
+                    valueFormat: 'n2',
+                    displayFormat: '{0}',
+                    showInGroupFooter: true,
+                }],
+                totalItems: [{
+                    column: 'BELOPP',
+                    summaryType: 'sum',
+                    customizeText: function (data) {
+                        return Globalize.format(data.value,'n2');
+                    }
+                }]
+                 },
+            }">
+		</div>
+
+	</div>
+</div>

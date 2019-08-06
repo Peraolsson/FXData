@@ -1,0 +1,38 @@
+<div data-options="dxView : { name: 'AN_Underregister', title: '@Underregister' } " >
+    <div  data-options="dxContent : { targetPlaceholder: 'content' } " >
+        <div id="AN_Underregistergrid" data-bind="dxDataGrid: {
+        columnChooser: {enabled:true},
+        paging: { pageSize: 8 },
+        pager: {
+        allowedPageSizes: [5, 8, 10,20],
+        showPageSizeSelector: true
+        },
+
+        filterRow: { visible: true },
+        searchPanel: { visible: false },
+        groupPanel: { visible: true },
+        allowColumnReordering: {enabled:true},
+        allowColumnResizing: {enabled:true},
+        selection: {mode:'single'},
+        editing: {
+			  allowUpdating: true,
+			  editMode: 'row',
+			  allowAdding: true,
+			  allowDeleting: true,
+			  useIcons: true,
+            },
+
+        onInitNewRow: function (rowInfo) {
+            addNewRow(rowInfo);
+        },
+
+        dataSource: dsTextr,
+        columns: [
+        { caption: '@Nr',dataField: 'NR',dataType: 'string' },
+        { caption: '@Texttyp',dataField: 'TEXT_TYP',dataType: 'string', visible: false },
+        { caption: '@Beskrivning',dataField: 'TEXT_1', datatype: 'string' },
+        ] }">
+
+        </div>
+    </div>
+</div>

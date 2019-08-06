@@ -1,0 +1,96 @@
+<div data-options="dxView : { name: 'AN_SkattemassigAvskrivning', title: '@Skattemassigavskrivning' } ">
+    <div data-options="dxContent : { targetPlaceholder: 'content' } ">
+        <div data-bind="dxScrollView: { }">
+            <div data-bind="style: {width: styleWidth()}" class="dx-fieldset">
+                <div class="dx-field">
+                    <div class="dx-field-label">@Anlaggningstyp</div>
+                    <div class="dx-field-value" data-bind="dxLookup: { value: anlTyp,
+                        dataSource: dsAnltyp,
+                        displayExpr: 'Namn',
+                        valueExpr: 'Kod',
+                        title: '@Anlaggningstyp'
+                        }"></div>
+                </div>
+                <div class="dx-field">
+                    <div class="dx-field-label">@Tomdatum</div>
+                    <div class="dx-field-value" data-bind="dxDateBox: {displayFormat: 'yyyy-MM-dd', type: 'date', value: datum}"></div>
+                </div>
+                <div class="dx-field">
+                    <div class="dx-field-label">@Valjanlaggning</div>
+                    <div class="dx-field-value" data-bind="dxRadioGroup: {value: typ,
+                items: [
+                    '@Enanlaggning',
+                    '@Enhuvudanlaggning',
+                    '@Allaanlaggningar',
+                    ],
+                    selectedIndex: 0,
+                    onValueChanged: typAvskrivning,
+                    }"></div>
+                </div>
+                <div data-bind="visible: showAnlnr" class="dx-field">
+                    <div class="dx-field-label">@Anlaggningsnummer</div>
+                    <div class="dx-field-value" data-bind="dxLookup: {  value: anlNr,
+                        itemTemplate: function(itemData, itemIndex, itemElement) {
+                        itemElement.empty();
+                        itemElement.append( itemData.ANL_NR + ' - ' + itemData.BEN );
+                        },
+                        placeholder: '@Anlaggningsnr',
+                        dataSource: dsREARE,
+                        valueExpr: 'ANL_NR',
+                        displayExpr: 'ANL_NR'
+                        }">
+                    </div>
+                </div>
+
+                <div data-bind="visible: showHuvanlnr" class="dx-field">
+                    <div class="dx-field-label">@Huvudanlaggning</div>
+                    <div class="dx-field-value" data-bind="dxLookup: {value: huvanlNr,
+                        itemTemplate: function(itemData, itemIndex, itemElement) {
+                        itemElement.empty();
+                        itemElement.append( itemData.NR + ' - ' + itemData.BEN );
+                        },
+                        placeholder: '@Huvanlnr',
+                        dataSource: dsREANH,
+                        valueExpr: 'NR',
+                        displayExpr: 'NR'
+                        }">
+                    </div>
+                </div>
+                <br />
+                <div data-bind="dxButton: { text: '@Skapatransaktioner' }"></div>
+                <br />
+                <div class="dx-field">
+                    <div class="dx-field-label">@Verdatum</div>
+                    <div class="dx-field-value" data-bind="dxDateBox: { displayFormat: 'yyyy-MM-dd', type: 'date', placeholder: '@Periodiseringsdatum',value: periodiseringsDatum}"></div>
+                </div>
+                <div class="dx-field">
+                    <div class="dx-field-label">@Verserie</div>
+                    <div class="dx-field-value" data-bind="dxLookup: {value: verSerie,
+                    itemTemplate: function(itemData, itemIndex, itemElement) {
+                        itemElement.empty();
+                        itemElement.append( itemData.Namn + ' - ' + itemData.Nummer );
+                        },
+                    placeholder: '@Verserie',
+                    dataSource: dsFenix_VerSerie,
+                    valueExpr: 'Namn',
+                    displayExpr: 'Namn',
+                    }
+                    "></div>
+                </div>
+                <div data-bind="dxButton: { text: '@Skapatransaktioner', onClick: skapaTransClick  }"></div>
+            </div>
+            <div data-bind="dxDataGrid: {
+                dataSource: ds,
+                columns: [
+                    { caption: '@AnlNr',dataField: 'ANL_NR', dataType: 'string' },
+                    {
+                        caption: '@Anskbelopp',
+                        calculateCellValue: function (data) {
+                            return AN_GetAnskaffning(data.ANL_NR);
+                            }
+                    },
+                ]
+            }"></div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,72 @@
+<div data-options="dxView : { name: 'AN_Justering', title: '@Justeraanlaggningar' } ">
+    <div data-options="dxContent : { targetPlaceholder: 'content' } ">
+        <div data-bind="dxScrollView: { }">
+            <div class="simple">
+                <div data-bind="dxRadioGroup: { value: typ,
+                items: [
+                    '@Forsaljning',
+                    '@Utrangering',
+                    '@Justeringavavskrivning',
+                    '@Justerabasbelopp',
+                    '@Andraavskrivningstid'
+                    ],
+                    selectedIndex: 0,
+                    onValueChanged: typChanged
+                    },
+            "></div>
+                <br />
+
+                <div data-bind="style: {width: styleWidth()}" class="dx-fieldset">
+                    <div class="dx-field">
+                        <div class="dx-field-label">@Anlnr</div>
+                        <div class="dx-field-value" data-bind="dxLookup: {  value: anlNr,
+                        itemTemplate: function(itemData, itemIndex, itemElement) {
+                        itemElement.empty();
+                        itemElement.append( itemData.ANL_NR + ' - ' + itemData.BEN );
+                        },
+                        placeholder: '@Anlaggningsnr',
+                        dataSource: dsREARE,
+                        valueExpr: 'ANL_NR',
+                        displayExpr: 'ANL_NR'
+                        }">
+                        </div>
+                    </div>
+
+                    <div class="dx-field">
+                        <div class="dx-field-label">@Andel</div>
+                        <div class="dx-field-value" data-bind="dxNumberBox: { hint: 'Ange utrangering i %',disabled: visAndel ,placeholder: '@Andel' , min: 0, max: 100, value: andel}"></div>
+                    </div>
+                    <div class="dx-field">
+                        <div class="dx-field-label">@Belopp</div>
+                        <div class="dx-field-value" data-bind="dxNumberBox:{ disabled: visBelopp ,placeholder: '@Belopp',value: belopp }"></div>
+                    </div>
+                    <div class="dx-field">
+                        <div class="dx-field-label">@Antalperioder</div>
+                        <div class="dx-field-value" data-bind="dxNumberBox:{ disabled: visAntalperioder ,placeholder: '@Antalperioder',value: antalPerioder }"></div>
+                    </div>
+                    <div class="dx-field">
+                        <div class="dx-field-label">@Verdatum</div>
+                        <div class="dx-field-value" data-bind="dxDateBox: { disabled:  visVerdatum ,displayFormat: 'yyyy-MM-dd', type: 'date', placeholder: '@Periodiseringsdatum',value: periodiseringsDatum}"></div>
+                    </div>
+                    <div class="dx-field">
+                        <div class="dx-field-label">@Verserie</div>
+                        <div class="dx-field-value" data-bind="dxLookup: {value: verSerie,
+                    itemTemplate: function(itemData, itemIndex, itemElement) {
+                        itemElement.empty();
+                        itemElement.append( itemData.Namn + ' - ' + itemData.Nummer );
+                        },
+                    placeholder: '@Verserie',
+                    dataSource: dsFenix_VerSerie,
+                    valueExpr: 'Namn',
+                    displayExpr: 'Namn',
+                    disabled: visVerserie ,}
+                    "></div>
+                    </div>
+                </div>
+
+                <br />
+                <div data-bind="dxButton: { text: '@Skapajustering',  onClick: justeringClick  }"></div>
+            </div>
+        </div>
+    </div>
+</div>

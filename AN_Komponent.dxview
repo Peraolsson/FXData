@@ -1,0 +1,33 @@
+<div data-options="dxView : { name: 'AN_Komponent', title: '@Komponentregister' } ">
+    <div data-options="dxContent : { targetPlaceholder: 'content' } ">
+        <div id="Fastighetgrid" data-bind="dxDataGrid: {
+        columnChooser: {enabled:true},
+        paging: { pageSize: 8 },
+        pager: {
+        allowedPageSizes: [5, 8, 10,20],
+        showPageSizeSelector: true
+        },
+
+        filterRow: { visible: true },
+        searchPanel: { visible: false },
+        groupPanel: { visible: true },
+        allowColumnReordering: {enabled:true},
+        allowColumnResizing: {enabled:true},
+        selection: {mode:'single'},
+        editing: {
+        allowUpdating: true,
+			  editMode: 'row',
+			  allowAdding: true,
+			  allowDeleting: true,
+			  useIcons: true,
+        },
+        dataSource: dsFenixKomponent ,
+        columns: [
+        { caption: '@Kod',dataField: 'Kod',dataType: 'string' },
+        { caption: '@Beskrivning',dataField: 'Beskrivning',dataType: 'string' },
+        { caption: '@Avskrivningstid',dataField: 'Avskrivningstid', datatype: 'number' },
+        ] }">
+
+        </div>
+    </div>
+</div>

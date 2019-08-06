@@ -1,0 +1,42 @@
+<div data-options="dxView : { name: 'AN_Fastighet', title: '@Fastigheter' } " >
+    <div  data-options="dxContent : { targetPlaceholder: 'content' } " >
+        <div id="Fastighetgrid" data-bind="dxDataGrid: {
+
+    columnChooser: {enabled:true},
+    paging: { pageSize: 8 },
+    pager: {
+        allowedPageSizes: [5, 8, 10,20],
+        showPageSizeSelector: true
+    },
+
+    filterRow: { visible: true },
+    searchPanel: { visible: false },
+    groupPanel: { visible: true },
+    allowColumnReordering: {enabled:true},
+    allowColumnResizing: {enabled:true},
+    selection: {mode:'single'},
+    editing: {
+            allowUpdating: true,
+            editMode: 'row',
+            allowAdding: true,
+            allowDeleting: true,
+				useIcons: true,				
+        },
+    dataSource: dsFenixFastighet ,
+                columns: [
+            { caption: '@Fastnr',dataField: 'FastNr',dataType: 'string' },
+            { caption: '@Beteckning',dataField: 'Beteckning',dataType: 'string' },
+            { caption: '@Marknadsvarde',dataField: 'Marknadsvarde',alignment: 'right', 
+                        format: function (value) {
+                            return formatNumber(value);
+                        },
+            dataType: 'number' },
+            { caption: '@Varderingsperson', dataField: 'Varderingsperson' , datatype: 'string' },
+            { caption: '@Varderingsdatum', dataField: 'Varderingsdatum' , datatype: 'date', format: 'yyyy-MM-dd', width: 110 , visible: true},
+            { caption: '@Notering',dataField: 'Notering',dataType: 'string' },
+             ] }">
+        </div>
+
+
+    </div>
+</div>

@@ -1,0 +1,92 @@
+<div data-options="dxView : { name: 'AN_Avskrivning' }, title: '@Avskrivningar' ">
+	<div data-options="dxContent : { targetPlaceholder: 'content' } ">
+		<div data-bind="dxCommand: {  location: 'after', target: 'current', id: 'back', title: '' , onExecute:handleBack , icon: 'arrowleft'}"></div>
+		<div data-bind="dxScrollView: { }">
+			<div data-bind="style: {width: styleWidth()}" class="dx-fieldset">
+				<div class="dx-field">
+					<div class="dx-field-label">@Tillochmeddatum</div>
+					<div class="dx-field-value" data-bind="dxDateBox: { displayFormat: 'yyyy-MM-dd', type: 'date', placeholder: '@Tillochmeddatum'}"></div>
+				</div>
+				<div class="dx-field">
+					<div class="dx-field-label">@Skaparetroaktivaavskrivningar</div>
+					<div class="dx-field-value" data-bind="dxCheckBox: {  placeholder: '@Skaparetroaktivaavskrivningar'}"></div>
+				</div><div class="dx-field">
+					<div class="dx-field-label">@Valjavskrivning</div>
+					<div class="dx-field-value" data-bind="dxRadioGroup: {
+                items: [
+                    '@Enanlaggning',
+                    '@Enhuvudanlaggning',
+                    '@Engrupp',
+                    '@Allaanlaggningar',
+                    ],
+                    selectedIndex: 0,
+                    onValueChanged: typAvskrivning,
+                    },
+            "></div>
+				</div>
+
+				<div data-bind="visible: showHuvanlnr" class="dx-field">
+					<div class="dx-field-label">@Huvanlnr</div>
+					<div class="dx-field-value" data-bind="dxLookup: {
+                        itemTemplate: function(itemData, itemIndex, itemElement) {
+                        itemElement.empty();
+                        itemElement.append( itemData.NR + ' - ' + itemData.BEN );
+                        },
+                        placeholder: '@Huvanlnr',
+                        dataSource: dsREANH,
+                        valueExpr: 'NR',
+                        displayExpr: 'NR'
+                        }">
+					</div>
+				</div>
+				<div data-bind="visible: showGrupp" class="dx-field">
+					<div class="dx-field-label">@Grupp</div>
+					<div class="dx-field-value" data-bind="dxLookup: {
+                        itemTemplate: function(itemData, itemIndex, itemElement) {
+                        itemElement.empty();
+                        itemElement.append( itemData.NR + ' - ' + itemData.TEXT_1 );
+                        },
+                        placeholder: '@Grupp',
+                        dataSource: dsTextr,
+                        valueExpr: 'NR',
+                        displayExpr: 'NR'
+                        }">
+					</div>
+				</div>
+				<div data-bind="visible: showAnlnr" class="dx-field">
+					<div class="dx-field-label">@Anlnr</div>
+					<div class="dx-field-value" data-bind="dxLookup: {
+                        itemTemplate: function(itemData, itemIndex, itemElement) {
+                        itemElement.empty();
+                        itemElement.append( itemData.ANL_NR + ' - ' + itemData.BEN );
+                        },
+                        placeholder: '@Anlaggningsnr',
+                        dataSource: dsREARE,
+                        valueExpr: 'ANL_NR',
+                        displayExpr: 'ANL_NR'
+                        }">
+					</div>
+				</div><div class="dx-field">
+					<div class="dx-field-label">@Simulera</div>
+					<div class="dx-field-value" data-bind="dxCheckBox: {
+                        placeholder: '@Simulera',
+                        value: chkSimulera,
+                        }"></div>
+				</div>
+
+				<div data-bind="visible: chkSimulera" class="dx-field">
+					<div class="dx-field-label">@Bfar</div>
+					<div class="dx-field">
+						<div class="dx-field-value" data-bind="dxTextBox:{ placeholder: '@Bfar' }"></div>
+					</div>
+				</div>
+
+				<br />
+				<div data-bind="dxButton: { text: '@Skapaavskrivning', onClick: SkapaAvskrivning
+                }"></div>
+
+			</div>
+		</div>
+	</div>
+</div>
+

@@ -1,0 +1,103 @@
+<div data-options="dxView : { name: 'AN_Saldolista', title: '@Saldolista' } ">
+    <div data-options="dxContent : { targetPlaceholder: 'content' } ">
+        <div data-bind="dxScrollView: { direction: 'both'}">
+            <div class="simple">
+                <div data-bind="style: {width: styleWidth()}" class="dx-fieldset">
+                    <div class="dx-field">
+                        <div class="dx-field-label">@From</div>
+                        <div class="dx-field-value" data-bind="dxDateBox: {displayFormat: FXMobile.defDate, type: 'date', value: fromDatum}"></div>
+                    </div>
+                    <div class="dx-field">
+                        <div class="dx-field-label">@Tom</div>
+                        <div class="dx-field-value" data-bind="dxDateBox: {displayFormat: FXMobile.defDate, type: 'date',value: tomDatum}"></div>
+                    </div>
+                    <br />
+                    <div class="dx-field">
+                        <div class="dx-field-label">@Typ</div>
+                        <div class="dx-field-value" data-bind="dxRadioGroup: { value: typ,items:
+                                [ '@Komplett', '@Avyttrade'], selectedIndex: 0 }"></div>
+                    </div>
+                    <br />
+                    <div data-bind="dxButton: { text: '@Skaparapport', onClick: SkapaRapport }"></div>
+                    <br />
+                </div>
+                <div data-bind="dxDataGrid: { dataSource: ds,
+                    columnChooser: {enabled:true},
+                    paging: { pageSize: 8 },
+                    pager: {
+                        allowedPageSizes: [5, 8, 10,20],
+                        showPageSizeSelector: true
+                    },
+                    stateStoring: { enabled: false },
+                    filterRow: { visible: true },
+                    searchPanel: { visible: false },
+                    groupPanel: { visible: true },
+                    allowColumnReordering: {enabled:true},
+                    allowColumnResizing: {enabled:true},
+                    selection: {mode:'single'},
+
+                   columns: [
+                    { caption: '@Anlnr',dataField: 'ANL_NR', dataType: 'string' },
+                    { caption: '@Ben',dataField: 'BEN', dataType: 'string' },
+                    { caption: '@Huvanlnr',dataField: 'HUV_ANL_NR', dataType: 'string' },
+                    { caption: '@Komponent',dataField: 'KOMPONENT', dataType: 'string' },
+                    { caption: '@Fastighet',dataField: 'FASTIGHET', dataType: 'string' },
+                    { caption: '@Grupp',dataField: 'GRUPP', dataType: 'string' },
+                    { caption: '@Typ',dataField: 'TYP', dataType: 'string' },
+                    { caption: '@Kategori',dataField: 'KAT', dataType: 'string' },
+                    { caption: '@Plats1',dataField: 'PLATS1', dataType: 'string' },
+                    { caption: '@Plats2',dataField: 'PLATS2', dataType: 'string' },
+                    { caption: '@Avskrper',dataField: 'AVSKR_PER', dataType: 'string' },
+                    { caption: '@Avskrtid',dataField: 'AVSKR_TID', dataType: 'string' },
+                    { caption: '@Levnr',dataField: 'LEV_NR', dataType: 'string' },
+                    { caption: '@Heltavskr',dataField: 'HELT_AVSKR', dataType: 'string' },
+                    { caption: '@Anskkonto',dataField: 'ANSK_KONTO', dataType: 'string' },
+                    { caption: '@Anskkd1',dataField: 'ANSK_KD1', dataType: 'string' },
+                    { caption: '@Anskkd2',dataField: 'ANSK_KD2', dataType: 'string' },
+                    { caption: '@Anskkd3',dataField: 'ANSK_KD3', dataType: 'string' ,visible: false},
+                    { caption: '@Anskkd4',dataField: 'ANSK_KD4', dataType: 'string' ,visible: false},
+                    { caption: '@Anskprojekt',dataField: 'ANSK_PROJEKT', dataType: 'string',visible: false },
+                    { caption: '@Anskdatum',dataField: 'ANSK_DATUM', visible: false, format: 'yyyy-MM-dd', width: 110 ,  dataType: 'date'},
+                    { caption: '@Anskfaktnr',dataField: 'ANSK_FAKTNR', visible: false,dataType: 'string' },
+                    { caption: '@Avyttdatum',dataField: 'AVYTT_DATUM', visible: false, format: 'yyyy-MM-dd', width: 110 ,  dataType: 'date'},
+                    { caption: '@Avyttbelopp', dataField: 'AVYTT_BELOPP', visible: false, alignment: 'right',                         format: function (value) {
+                            return formatNumber(value);
+                        }, dataType: 'number'},
+                    { caption: '@Avyttvernr',dataField: 'AVYTT_VERNR', visible: false,dataType: 'string' },
+                    { caption: '@Avyttdatumklar',dataField: 'AVYTT_DATUM_KLAR', visible: false, format: 'yyyy-MM-dd', width: 110 ,  dataType: 'date'},
+                    { caption: '@Ackavskrivning', dataField:  'Ackumulerade avskrivningar', visible: true, alignment: 'right',                         format: function (value) {
+                            return formatNumber(value);
+                        }, dataType: 'number'},
+                    { caption: '@Anskbelopp', alignment: 'right',                         format: function (value) {
+                            return formatNumber(value);
+                        }, dataType: 'number',
+                        calculateCellValue: function (data) {
+                        return AN_GetAnskaffning(data.ANL_NR);
+                        }
+                    },
+                    { caption: '@Ingrestvarde', alignment: 'right',                         format: function (value) {
+                            return formatNumber(value);
+                        }, dataType: 'number',
+                        calculateCellValue: function (data) {
+                        return AN_Get_Ingaenderestvarde(data.ANL_NR,fromDatum())
+                        }
+                    },
+
+                    { caption: '@Komponentben',
+                        calculateCellValue: function (data) {
+                        return GetColumn('Beskrivning','Fenix_Komponent','Kod=' + data.KOMPONENT);
+                        }
+                    },
+                    { caption: '@Fastighetben',
+                        calculateCellValue: function (data) {
+                        return GetColumn('Beteckning','Fenix_Fastighet','FastNr=' + data.FASTIGHET);
+                            }
+                    },
+                ]
+
+
+                    }"></div>
+            </div>
+        </div>
+    </div>
+</div>
